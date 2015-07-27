@@ -12,7 +12,7 @@ class V8themePlugin(octoprint.plugin.AssetPlugin):
         )
 
 
-def get_update_information(self, *args, **kwargs):
+def get_update_information(*args, **kwargs):
     return dict(
         v8theme=dict(
             type="github_commit",

@@ -11,19 +11,29 @@ from __future__ import absolute_import
 import octoprint.plugin
 
 class V8themePlugin(octoprint.plugin.AssetPlugin):
-	pass
+    pass
 
 # If you want your plugin to be registered within OctoPrint under a different name than what you defined in setup.py
 # ("OctoPrint-PluginSkeleton"), you may define that here. Same goes for the other metadata derived from setup.py that
 # can be overwritten via __plugin_xyz__ control properties. See the documentation for that.
 __plugin_name__ = "V8theme Plugin"
 
+
+def get_update_information(self, *args, **kwargs):
+    return dict(
+        alignment_plugin=dict(
+            type="github_commit",
+            user="Voxel8",
+            repo="OctoPrint-V8theme",
+            branch='master',
+            pip="https://github.com/Voxel8/OctoPrint-V8theme/archive/{target_version}.zip",
+        )
+    )
+
 def __plugin_load__():
-	global __plugin_implementation__
-	__plugin_implementation__ = V8themePlugin()
+    global __plugin_implementation__
+    __plugin_implementation__ = V8themePlugin()
 
-	# global __plugin_hooks__
-	# __plugin_hooks__ = {
-	#    "some.octoprint.hook": __plugin_implementation__.some_hook_handler
-	# }
-
+    __plugin_hooks__ = {
+        "octoprint.plugin.softwareupdate.check_config": get_update_information,
+    }

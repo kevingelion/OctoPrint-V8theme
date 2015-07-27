@@ -1,3 +1,7 @@
 body {
   color: green;
 }
+
+#temperature-graph {
+	background-image: none !important;
+}

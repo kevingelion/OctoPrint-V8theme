@@ -11,7 +11,12 @@ from __future__ import absolute_import
 import octoprint.plugin
 
 class V8themePlugin(octoprint.plugin.AssetPlugin):
-    pass
+    def get_assets(self):
+        return dict(
+            #js=['js/my_file.js', 'js/my_other_file.js'],
+            css=['css/main.css'],
+            #less=['less/my_styles.less']
+        )
 
 # If you want your plugin to be registered within OctoPrint under a different name than what you defined in setup.py
 # ("OctoPrint-PluginSkeleton"), you may define that here. Same goes for the other metadata derived from setup.py that
@@ -21,7 +26,7 @@ __plugin_name__ = "V8theme Plugin"
 
 def get_update_information(self, *args, **kwargs):
     return dict(
-        alignment_plugin=dict(
+        v8theme=dict(
             type="github_commit",
             user="Voxel8",
             repo="OctoPrint-V8theme",

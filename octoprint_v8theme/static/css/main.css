@@ -5,3 +5,10 @@ body {
 #temperature-graph {
 	background-image: none !important;
 }
+
+.brand span {
+	display: none;
+}
+.brand:after {
+	content: "Voxel8 DevKit";
+}

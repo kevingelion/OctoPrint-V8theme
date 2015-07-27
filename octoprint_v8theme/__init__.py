@@ -26,7 +26,7 @@ __plugin_name__ = "V8theme Plugin"
 
 def get_update_information(self, *args, **kwargs):
     return dict(
-        v8theme=dict(
+        v8theme_plugin=dict(
             type="github_commit",
             user="Voxel8",
             repo="OctoPrint-V8theme",

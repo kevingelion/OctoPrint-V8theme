@@ -10,8 +10,7 @@ from __future__ import absolute_import
 
 import octoprint.plugin
 
-class V8themePlugin(octoprint.plugin.TemplatePlugin):
-	# TODO Implement me!
+class V8themePlugin(octoprint.plugin.AssetPlugin):
 	pass
 
 # If you want your plugin to be registered within OctoPrint under a different name than what you defined in setup.py

@@ -1,9 +1,6 @@
-body {
-  color: green;
-}
-
 #temperature-graph {
 	background-image: none !important;
+    height: 150px;
 }
 
 .brand span {

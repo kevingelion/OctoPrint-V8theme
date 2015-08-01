@@ -6,7 +6,7 @@ import octoprint.plugin
 class V8themePlugin(octoprint.plugin.AssetPlugin):
     def get_assets(self):
         return dict(
-            #js=['js/my_file.js', 'js/my_other_file.js'],
+            js=['js/v8theme.js'],
             css=['css/main.css'],
             #less=['less/my_styles.less']
         )

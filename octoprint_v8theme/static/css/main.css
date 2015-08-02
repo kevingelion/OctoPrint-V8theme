@@ -1,11 +1,52 @@
 #temperature-graph {
-	background-image: none !important;
+    background-image: none !important;
     height: 150px;
 }
 
+.legend {
+    display: none;
+}
+
 .brand span {
-	display: none;
+    display: none;
 }
 .brand:after {
-	content: "Voxel8 DevKit";
+    content: "Voxel8 DevKit";
+}
+
+a {
+    color: #fa7917;
+}
+
+.nav-list>.active>a, .nav-list>.active>a:hover {
+    color: #fff;
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.2);
+    background-color: #fa7917;;
+}
+
+.nav-list>a:hover {
+    color: #5A5A5A;
+}
+
+.nav>li>a:hover {
+    color: #5A5A5A;
+}
+
+.slider .slider-selection {
+    background-color: #5A5A5A;
+    background-image: linear-gradient(to bottom,#FA7917,#FA7917);
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #FA7917;
+    background-image: linear-gradient(to bottom,#FA7917,#FA7917);
+}
+
+.btn-primary[disabled]{
+    background-color: #FA7917;
+}
+
+.btn-primary:hover {
+    background-color: #FB8023;
 }

@@ -43,7 +43,7 @@ a {
     background-image: linear-gradient(to bottom,#FA7917,#FA7917);
 }
 
-.btn-primary[disabled]{
+.btn-primary[disabled], .btn-primary.disabled{
     background-color: #FA7917;
 }
 

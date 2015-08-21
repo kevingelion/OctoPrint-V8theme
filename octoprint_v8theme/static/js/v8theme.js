@@ -3,10 +3,13 @@ $(function() {
         var self = this;
 
         self.onAllBound = function() {
-            $("#temp_link").remove();
-            $("#control_link").addClass("active");
-            $("#control").prepend($("#temp").contents());
-            $("#control").addClass("active");
+            // Everything is added to the Temperature tab because the graph is
+            // wired to redraw when it is selected.
+            $("#control_link").remove();
+            $("#temp_link").addClass("active");
+            $("#temp_link").text("Control");
+            $("#temp").append($("#control").contents());
+            $("#temp").addClass("active");
         };
     }
 

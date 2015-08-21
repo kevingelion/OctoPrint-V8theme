@@ -3,11 +3,11 @@ $(function() {
         var self = this;
 
         self.onAllBound = function() {
-		$("#temp_link").remove();
-		$("#control_link").addClass("active");
-		$("#control").prepend($("#temp").contents());
-		$("#control").addClass("active");
-	};
+            $("#temp_link").remove();
+            $("#control_link").addClass("active");
+            $("#control").prepend($("#temp").contents());
+            $("#control").addClass("active");
+        };
     }
 
     OCTOPRINT_VIEWMODELS.push([

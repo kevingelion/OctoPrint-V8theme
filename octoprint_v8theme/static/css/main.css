@@ -47,6 +47,6 @@ a {
     background-color: #FA7917;
 }
 
-.btn-primary:hover {
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
     background-color: #FB8023;
 }

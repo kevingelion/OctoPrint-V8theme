@@ -7,7 +7,7 @@ $(function() {
             // wired to redraw when it is selected.
             $("#control_link").remove();
             $("#temp_link").addClass("active");
-            $("#temp_link").text("Control");
+            //$("#temp_link").text("Control");
             $("#temp").append($("#control").contents());
             $("#temp").addClass("active");
         };

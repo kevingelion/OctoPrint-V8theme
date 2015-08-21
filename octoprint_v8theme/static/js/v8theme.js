@@ -4,10 +4,14 @@ $(function() {
         self.temp = parameters[0]
 
         self.onAllBound = function() {
+            // Merge Temperature and Control tabs
             $("#temp_link").remove();
             $("#control_link").addClass("active");
             $("#control").prepend($("#temp").contents());
             $("#control").addClass("active");
+
+            $("#settings_dialog_label").text("Settings");
+            document.title = "Voxel8 DevKit";
         };
 
         self.onAfterTabChange = function(current, previous) {

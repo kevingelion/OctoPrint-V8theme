@@ -9,6 +9,8 @@ $(function() {
             $("#control_link").addClass("active");
             $("#control").prepend($("#temp").contents());
             $("#control").addClass("active");
+            $("#temperature-graph").closest(".row").css('padding-left', '0px');
+            $("#temperature-graph").closest(".row").attr('class', 'row-fluid');
 
             $("#settings_dialog_label").text("Settings");
             document.title = "Voxel8 DevKit";

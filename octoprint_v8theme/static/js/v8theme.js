@@ -3,6 +3,106 @@ $(function() {
         var self = this;
         self.temperature = parameters[0];
         self.terminal = parameters[1];
+        
+        var Colors = ["#fbc08d", "#fde0c8", "#ffb6a6", "#ffdbd4"];
+        self.terminal.lineCount = ko.computed(function() {
+            var total = self.terminal.log().length;
+            var displayed = _.filter(self.terminal.displayedLines(), function(entry) {
+                return entry.type == "line"
+            }).length;
+            var filtered = total - displayed;
+
+            if (total == displayed) {
+                return _.sprintf(gettext("%(displayed)d"), {
+                    displayed: displayed
+                });
+            } else {
+                return _.sprintf(gettext("%(displayed)d/%(total)d"), {
+                    displayed: displayed,
+                    total: total
+                });
+            }
+        });
+
+        self.temperature.plotOptions = {
+            grid: {
+                show: true,
+                aboveData: true,
+                color: "#3f3f3f",
+                labelMargin: 5,
+                axisMargin: 0,
+                borderWidth: 0,
+                borderColor: null,
+                minBorderMargin: 5,
+                clickable: true,
+                hoverable: true,
+                autoHighlight: false
+            },
+            series: {
+                lines: {
+                    show: true,
+                    fill: false,
+                    lineWidth: 2,
+                    steps: false
+                },
+                points: {
+                    show: false
+                }
+            },
+            yaxis: {
+                min: 0
+            },
+            xaxis: {
+                mode: "time",
+                ticks: 10,
+                minTickSize: [2, "minute"],
+                tickFormatter: function(val, axis) {
+                    if (val == undefined || val == 0)
+                        return ""; // we don't want to display the minutes since the epoch if not connected yet ;)
+
+                    // current time in milliseconds in UTC
+                    var timestampUtc = Date.now();
+
+                    // calculate difference in milliseconds
+                    var diff = timestampUtc - val;
+
+                    // convert to minutes
+                    var diffInMins = Math.round(diff / (60 * 1000));
+                    if (diffInMins == 0)
+                        return gettext("just now!");
+                    else
+                        return "- " + diffInMins + " " + gettext("min");
+                }
+            },
+            colors: Colors,
+            shadowSize: 1,
+            tooltip: true,
+            //activate tooltip
+            tooltipOpts: {
+                content: "%s : %y.0",
+                shifts: {
+                    x: -30,
+                    y: -50
+                },
+                defaultTheme: false
+            }
+        };
+        
+        self.parseCustomControls = function() {
+            $("#control .custom_section").each(function() {
+                var accordionName = $('h1 span', this).text();
+                accordionName_nospace = accordionName.replace(/\s+/g, '');
+                $("#control_wrapper").after("<div id='" + accordionName_nospace + "_wrapper' class='accordion-group'><div class='accordion-heading'><a class='accordion-toggle' data-toggle='collapse' data-target='#" + accordionName_nospace + "_main'><i class='icon-info-sign'></i> " + accordionName + " </a></div><div id='" + accordionName_nospace + "_main' class='accordion-body collapse in '><div class='accordion-inner'></div></div>");
+                if ($(".custom_section_horizontal", this).length) {
+                    $(".custom_section_horizontal", this).appendTo("#" + accordionName_nospace + "_main .accordion-inner");
+                } else if ($(".custom_section_vertical", this).length) {
+                    $(".custom_section_vertical", this).appendTo("#" + accordionName_nospace + "_main .accordion-inner");
+                } else if ($(".custom_section_horizontal_grid", this).length) {
+                    $(".custom_section_horizontal_grid", this).appendTo("#" + accordionName_nospace + "_main .accordion-inner");
+                }
+                $(this).remove();
+            });
+        };
 
         self.temperature.updatePlot = function() {
             var graph = $("#temperature-graph");

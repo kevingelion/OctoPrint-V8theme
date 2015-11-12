@@ -36,7 +36,8 @@ $(function() {
                 minBorderMargin: 5,
                 clickable: true,
                 hoverable: true,
-                autoHighlight: false
+                autoHighlight: false,
+                backgroundColor: "#fcfcfc"
             },
             series: {
                 lines: {

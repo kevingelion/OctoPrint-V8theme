@@ -627,7 +627,13 @@ input[type="text"].search-query {
   overflow: hidden;
   zoom: 1;
 }
+.media .bulletColor {
+  float: left;
+  margin-top: 8px;
+  margin-right: 5px;
+}
 .media-heading {
+  white-space: nowrap;
   margin: 0 0 5px;
 }
 .media-heading small {

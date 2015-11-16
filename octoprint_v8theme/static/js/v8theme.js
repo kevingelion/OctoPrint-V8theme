@@ -93,7 +93,7 @@ $(function() {
       $("#control .custom_section").each(function() {
         var accordionName = $('h1 span', this).text();
         accordionName_nospace = accordionName.replace(/\s+/g, '');
-        $("#control_wrapper").after("<div id='" + accordionName_nospace + "_wrapper' class='accordion-group'><div class='accordion-heading'><a class='accordion-toggle' data-toggle='collapse' data-target='#" + accordionName_nospace + "_main'><i class='icon-info-sign'></i> " + accordionName + " </a></div><div id='" + accordionName_nospace + "_main' class='accordion-body collapse in '><div class='accordion-inner'></div></div>");
+        $("#terminal_wrapper").after("<div id='" + accordionName_nospace + "_wrapper' class='accordion-group'><div class='accordion-heading'><a class='accordion-toggle' data-toggle='collapse' data-target='#" + accordionName_nospace + "_main'><i class='icon-info-sign'></i> " + accordionName + " </a></div><div id='" + accordionName_nospace + "_main' class='accordion-body collapse in '><div class='accordion-inner'></div></div>");
         if ($(".custom_section_horizontal", this).length) {
           $(".custom_section_horizontal", this).appendTo("#" + accordionName_nospace + "_main .accordion-inner");
         } else if ($(".custom_section_vertical", this).length) {
@@ -166,7 +166,7 @@ $(function() {
       document.title = "Voxel8 DevKit";
 
       // Merge Control and Terminal tabs
-      $("#navbar .brand").html("<img src='http://static1.squarespace.com/static/54a59cdce4b0e8454933affc/t/54a719c2e4b0e84549391dd6/1445880475584/' />");
+      $("#navbar .brand").html("<img src='/plugin/v8theme/static/logo.png' />");
 
       $("#term_link").remove();
       $("#gcode_link").remove();
@@ -174,8 +174,8 @@ $(function() {
       $("#term").closest(".tab-content").addClass("main-content-wrapper");
       $("#control").prepend($("#term").contents());
       $(".octoprint-container .tab-content").before("<div id='temperature_monitor'></div><div id='temperature_wrapper' class='accordion-group'><div class='accordion-heading'><a class='accordion-toggle' data-toggle='collapse' data-target='#temperature_main'><i class='icon-info-sign'></i> Temperature </a><div class='heading_buttons'><button class='btn btn-mini btn-default btn-sm text-light7 temperature-height'>Expand</button></div></div><div id='temperature_main' class='accordion-body collapse in '><div class='accordion-inner'></div></div><div class='panel-footer pn'><div class='row-fluid'><div class='span4 panel-sidemenu border-right'> <h4 class='mb25 pl25'>Tool Temperature</h4> <div class='media active' data-toggle='tab' data-target='#hotend_temp'><span class='pull-left span6 hotend_temp'></span><div class='media-body span6'> <h5 class='media-heading p4'>Hotend<br> <small> Max. 400C</small></h5> </div> </div> <div class='media' data-toggle='tab' data-target='#bed_temp'><span class='pull-left span6 bed_temp'></span><div class='media-body span6'> <h5 class='media-heading p4'>Print Bed<br> <small> Max. 120C</small></h5> </div> </div> </div><div class='span8 va-m p15 pt20 temp_wrapper'><div class='tab-content'><div id='hotend_temp' class='tab-pane active'><h4 class='mb25'>Hotend Control</h4><div class='row-fluid'><div class='span6 pl15 pr15'><h6>Manual Control</h6><div class='row-fluid'><div class='span3'><label for='spinner' class='control-label'>Target</label></div><div class='span9'><div class='input-group hotend_target'></div></div></div><div class='row-fluid'><div class='span3'><label for='spinner' class='control-label'>Offset</label></div><div class='span9'><div class='input-group hotend_offset'></div></div></div></div><div class='span6 pl15'><h6>Temperature Presets</h6><div class='btn-spread'></div></div></div></div><div id='bed_temp' class='tab-pane'><h4 class='mb25'>Print Bed Control</h4><div class='row-fluid'><div class='span6 pl15 pr15'><h6>Manual Control</h6><div class='row-fluid'><div class='span3'><label for='spinner' class='control-label'>Target</label></div><div class='span9'><div class='input-group bed_target'></div></div></div><div class='row-fluid'><div class='span3'><label for='spinner' class='control-label'>Offset</label></div><div class='span9'><div class='input-group bed_offset'></div></div></div></div><div class='span6 pl15'><h6>Temperature Presets</h6><div class='btn-spread'></div></div></div></div></div></div></div></div></div>");
-      $("#temperature_wrapper").after("<div id='terminal_wrapper' class='accordion-group'><div class='accordion-heading'><a class='accordion-toggle' data-toggle='collapse' data-target='#terminal_main'><i class='icon-info-sign'></i> Commands <div class='terminal_input'></div></a></div><div id='terminal_main' class='accordion-body collapse'><div class='accordion-inner'></div></div>");
-      $("#terminal_wrapper").after("<div id='control_wrapper' class='accordion-group'><div class='accordion-heading'><a class='accordion-toggle' data-toggle='collapse' data-target='#control_main'><i class='icon-info-sign'></i> Control </a></div><div id='control_main' class='accordion-body collapse in '><div class='accordion-inner'></div></div>");
+      $("#temperature_wrapper").after("<div id='control_wrapper' class='accordion-group'><div class='accordion-heading'><a class='accordion-toggle' data-toggle='collapse' data-target='#control_main'><i class='icon-info-sign'></i> Control </a></div><div id='control_main' class='accordion-body collapse in '><div class='accordion-inner'></div></div>");
+      $("#control_wrapper").after("<div id='terminal_wrapper' class='accordion-group'><div class='accordion-heading'><a class='accordion-toggle' data-toggle='collapse' data-target='#terminal_main'><i class='icon-info-sign'></i> Commands <div class='terminal_input'></div></a></div><div id='terminal_main' class='accordion-body collapse'><div class='accordion-inner'></div></div>");
 
       $("#temperature-graph").parent().next(".row-fluid").prependTo("#temperature_main .accordion-inner");
       $("#temperature-graph").prependTo("#temperature_main .accordion-inner");
@@ -186,7 +186,7 @@ $(function() {
       $("#control .terminal").next(".row-fluid").prependTo("#terminal_main .accordion-inner");
       $("#control .terminal").prependTo("#terminal_main .accordion-inner");
 
-      $('link[rel="shortcut icon"]').attr('href', 'http://www.voxel8.co/favicon.ico');
+      $('link[rel="shortcut icon"]').attr('href', '/plugin/v8theme/static/favicon.ico');
       $("#terminal-output").addClass("well");
 
       $("#terminal_main").after("<div class='panel-footer'><div class='row-fluid'><div class='span8 terminal-textbox'></div><div class='span4 terminal-submit'></div></div></div>");
@@ -367,6 +367,16 @@ $(function() {
           collision: "flipfit"
         }
       });
+
+      $('.accordion-heading').has('.heading_buttons').click(_.throttle(function (e) {
+        console.log("checking");
+        if ($(this).next('.accordion-body').hasClass('in')) {
+          $(this).find('.heading_buttons').fadeOut('150');
+        } else {
+          $(this).find('.heading_buttons').fadeIn('150');
+        }
+      }, 375, {trailing: false}, {leading: false}));
+
     };
 
     self.onAfterTabChange = function(current, previous) {

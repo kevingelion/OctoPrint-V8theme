@@ -1061,6 +1061,13 @@ span.fileinput-button {
     border-left: 1px solid #d5d5d5;
     border-right: 1px solid #d5d5d5;
   }
+  .panel-sidemenu.border-right {
+    border: none!important;
+  }
+  #files_wrapper .dropdown-menu {
+    left: inherit;
+    right: 0;
+  }
 }
 /*===================================================
    B. 768px and larger
@@ -1096,6 +1103,12 @@ span.fileinput-button {
   .btn-spread .btn {
     width: 100%;
     margin-top: 10px;
+  }
+  .media-heading {
+    padding-left: 0!important;
+  }
+  .media .span6 {
+    width: 100%;
   }
 }
 /*===================================================

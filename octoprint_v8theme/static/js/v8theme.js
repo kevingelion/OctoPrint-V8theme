@@ -369,7 +369,7 @@ $(function() {
       });
 
       $('.accordion-heading').has('.heading_buttons').click(_.throttle(function (e) {
-        if ($(e.target).is('.heading_buttons') || $(e.target).is('.temperature-height')) { return }
+        if ($(e.target).is('.heading_buttons, .temperature-height')) { return }
         if ($(this).next('.accordion-body').hasClass('in')) {
           $(this).find('.heading_buttons').fadeOut('150');
         } else {

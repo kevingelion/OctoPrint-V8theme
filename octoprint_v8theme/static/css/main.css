@@ -922,6 +922,9 @@ span.fileinput-button {
 .p4 {
   padding: 4px !important;
 }
+.p15 {
+  padding: 15px!important;
+}
 .pl15 {
   padding-left: 15px!important;
 }
@@ -1001,6 +1004,7 @@ span.fileinput-button {
      B. 768px and larger
      C. Between 768px and 979px
      D. 980px and larger
+     E. Between 980px and 1199px
 ===================================================
    A. 767px and smaller
 =================================================== */
@@ -1115,6 +1119,19 @@ span.fileinput-button {
     font-size: 12px;
     padding-right: 11px;
   }
+  .table-layout {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    margin: 0;
+  }
+  .table-layout > div {
+    display: table-cell!important;
+    float: none!important;
+  }
+  .table-layout::after, .table-layout::before {
+    content: initial!important;
+  }
 }
 /*===================================================
    C. Between 768px and 979px
@@ -1152,5 +1169,13 @@ span.fileinput-button {
 @media (min-width: 980px) {
   #files .gcode_files .entry .size {
     padding-bottom: 10px;
+  }
+}
+/*===================================================
+   E. Between 980px and 1199px
+=================================================== */
+@media (min-width: 980px) and (max-width: 1199px) {
+  #hotend_temp .span6.pl15, #bed_temp .span6.pl15 {
+    padding-left: 0!important;
   }
 }

@@ -24,6 +24,9 @@ $(function() {
       }
     });
 
+    /* Modified from OctoPrint
+     * Reason: Edit color options, as well as number of ticks, and min/max values
+     */
     self.temperature.plotOptions = {
       grid: {
         show: true,
@@ -70,7 +73,7 @@ $(function() {
           // convert to minutes
           var diffInMins = Math.round(diff / (60 * 1000));
           if (diffInMins == 0)
-            return gettext("just now!");
+            return gettext("just now");
           else
             return "- " + diffInMins + " " + gettext("min");
         }
@@ -78,7 +81,6 @@ $(function() {
       colors: flotColors,
       shadowSize: 1,
       tooltip: true,
-      //activate tooltip
       tooltipOpts: {
         content: "%s : %y.0",
         shifts: {
@@ -105,6 +107,10 @@ $(function() {
       });
     };
 
+    /* Modified from OctoPrint
+     * Reason: Remove temperature from label as well as renaming tool "T" to "Hotend"
+     * and to apply our own colors
+     */
     self.temperature.updatePlot = function() {
       var graph = $("#temperature-graph");
       if (graph.length) {
@@ -132,6 +138,7 @@ $(function() {
             heaterOptions[type].name = "Hotend";
           }
 
+          /* Below, we edit the label by not including actualTemp or targetTemp */
           data.push({
             label: gettext("Actual") + " " + heaterOptions[type].name,
             data: actuals,
@@ -148,6 +155,7 @@ $(function() {
           });
         });
 
+        /* Hide tooltip and overlay bar every time we update the plot */
         self.temperature.plot = $.plot(graph, data, self.temperature.plotOptions);
         $("#tooltip_bar, #tooltip").css("display", "none");
       }

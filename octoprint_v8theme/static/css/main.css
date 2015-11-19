@@ -1114,8 +1114,8 @@ span.fileinput-button {
     padding-bottom: 10px;
   }
   .accordion-group {
-    border-left: 1px solid #d5d5d5;
-    border-right: 1px solid #d5d5d5;
+    border-left: 1px solid #d5d5d5!important;
+    border-right: 1px solid #d5d5d5!important;
   }
   .panel-sidemenu.border-right {
     border: none!important;

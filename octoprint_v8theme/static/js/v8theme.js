@@ -93,15 +93,25 @@ $(function() {
 
     self.parseCustomControls = function() {
       $("#control .custom_section").each(function() {
-        var accordionName = $('h1 span', this).text();
+        var accordionName = $(this).find('h1 span').text();
         accordionName_nospace = accordionName.replace(/\s+/g, '');
-        $("#terminal_wrapper").after("<div id='" + accordionName_nospace + "_wrapper' class='accordion-group'><div class='accordion-heading'><a class='accordion-toggle' data-toggle='collapse' data-target='#" + accordionName_nospace + "_main'><i class='icon-info-sign'></i> " + accordionName + " </a></div><div id='" + accordionName_nospace + "_main' class='accordion-body collapse in '><div class='accordion-inner'></div></div>");
-        if ($(".custom_section_horizontal", this).length) {
-          $(".custom_section_horizontal", this).appendTo("#" + accordionName_nospace + "_main .accordion-inner");
-        } else if ($(".custom_section_vertical", this).length) {
-          $(".custom_section_vertical", this).appendTo("#" + accordionName_nospace + "_main .accordion-inner");
-        } else if ($(".custom_section_horizontal_grid", this).length) {
-          $(".custom_section_horizontal_grid", this).appendTo("#" + accordionName_nospace + "_main .accordion-inner");
+        $("#terminal_wrapper").after("<div id='" + accordionName_nospace + "_wrapper' class='accordion-group'><div class='accordion-heading'><a class='accordion-toggle custom-control-toggle' data-toggle='collapse' data-target='#" + accordionName_nospace + "_main'><i class='icon-info-sign'></i> " + accordionName + " </a></div><div id='" + accordionName_nospace + "_main' class='accordion-body collapse in '><div class='accordion-inner'></div></div>");
+        var elementHorizontal = $(this).find('.custom_section_horizontal'), elementHorizontalGrid = $(this).find('.custom_section_horizontal_grid'), elementVertical = $(this).find('.custom_section_vertical');
+        if (elementHorizontal.length) {
+          if (elementHorizontal.hasClass('hide')) {
+            $("#" + accordionName_nospace + "_main").removeClass('in');
+          }
+          elementHorizontal.appendTo("#" + accordionName_nospace + "_main .accordion-inner");
+        } else if (elementVertical.length) {
+          if (elementVertical.hasClass('hide')) {
+            $("#" + accordionName_nospace + "_main").removeClass('in');
+          }
+          elementVertical.appendTo("#" + accordionName_nospace + "_main .accordion-inner");
+        } else if (elementHorizontalGrid.length) {
+          if (elementHorizontalGrid.hasClass('hide')) {
+            $("#" + accordionName_nospace + "_main").removeClass('in');
+          }
+          elementHorizontalGrid.appendTo("#" + accordionName_nospace + "_main .accordion-inner");
         }
         $(this).remove();
       });
@@ -377,7 +387,7 @@ $(function() {
       });
 
       $('.accordion-heading').has('.heading_buttons').click(_.throttle(function (e) {
-        if ($(e.target).is('.heading_buttons, .temperature-height')) { return }
+        if ($(e.target).is('.heading_buttons') || $(e.target).parents('.heading_buttons').length > 0) { return }
         if ($(this).next('.accordion-body').hasClass('in')) {
           $(this).find('.heading_buttons').fadeOut('150');
         } else {
@@ -415,6 +425,12 @@ $(function() {
       } else {
         $(".main-content-wrapper").remove();
       }
+      $('.custom-control-toggle').click(function() {
+        var toggleButton = $(this).closest('.accordion-group').find('.accordion-inner').find('.custom_section_horizontal, .custom_section_horizontal_grid, .custom_section_vertical');
+        if (toggleButton.hasClass('hide')) {
+          toggleButton.removeClass('hide');
+        }
+      });
     };
 
     var lastScrollTop = 0;

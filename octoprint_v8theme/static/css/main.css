@@ -321,7 +321,7 @@ a.accordion-toggle {
     background-color: #FA7917;
 }
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active {
-    background-color: #FB8023;
+    background-color: #FA7917;
 }
 .btn {
   color: #555555;
@@ -364,6 +364,23 @@ a.accordion-toggle {
   background-repeat: repeat-x;
   filter: none!important;
   background-image: none!important;
+}
+.btn-danger {
+  color: #FFF;
+  outline: none;
+  line-height: 1.47;
+  border-radius: 2px;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4);
+  border-color: rgba(0, 0, 0, 0.07) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.18);
+  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  background-color: #DA4F49;
+  background-repeat: repeat-x;
+  filter: none!important;
+  background-image: none!important;
+}
+.btn-danger:hover, .btn-danger:focus, .btn-danger:active, .btn-danger.active, .btn-danger.disabled, .btn-danger[disabled] {
+  background-color: #DA4F49;
 }
 .btn:focus, .btn:active {
   outline: none!important;
@@ -1160,7 +1177,7 @@ span.fileinput-button {
     padding-left: 0!important;
   }
   .media .span6 {
-    width: 100%;
+    width: 100%!important;
   }
 }
 /*===================================================

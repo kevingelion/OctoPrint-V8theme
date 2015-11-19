@@ -54,11 +54,12 @@ $(function() {
         }
       },
       yaxis: {
-        min: 0
+        min: 0,
+        max: 310,
+        ticks: 10
       },
       xaxis: {
         mode: "time",
-        ticks: 10,
         minTickSize: [2, "minute"],
         tickFormatter: function(val, axis) {
           if (val == undefined || val == 0)

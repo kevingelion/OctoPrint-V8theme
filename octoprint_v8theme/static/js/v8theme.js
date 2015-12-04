@@ -3,7 +3,7 @@ $(function() {
     var self = this;
     self.temperature = parameters[0];
     self.terminal = parameters[1];
-    self.custom = parameters[2];
+    self.customControls = parameters[2];
 
     /* Modified from OctoPrint
      * Reason: Edit how line numbers are displayed and created a buffer when
@@ -459,25 +459,26 @@ $(function() {
       });
     };
 
-    self.oldControl = self.custom.rerenderControls;
-    self.custom.rerenderControls = function () {
+    self.oldControl = self.customControls.rerenderControls;
+    self.customControls.rerenderControls = function () {
       self.oldControl();
       self.parseCustomControls();
     }
 
     self.onEventPrintDone = function(payload) {
-      if (!Notification) {
+      if (typeof Notification === 'undefined') {
         console.log('Desktop notifications not available in your browser. Try Chromium.'); 
         return;
       }
       if (Notification.permission !== "granted")
         Notification.requestPermission();
       else {
-        var time = payload.time;
-        var hours = Math.floor(time / 3600);
-        time = time - hours * 3600;
-        var minutes = Math.floor(time / 60);
-        var seconds = Math.round(time - minutes * 60);
+        var imeInSecs = payload.time;
+        var hours = Math.floor(timeInSecs / 3600);
+        timeInSecs = timeInSecs % 3600;
+        var minutes = Math.floor(timeInSecs / 60);
+        timeInSecs = timeInSecs % 60;
+        var seconds = timeInSecs;
         var notification = new Notification(payload.filename + ' - Print Complete', {
           icon: '/plugin/v8theme/static/square_logo.png',
           body: "Your print is complete after " + hours + " hours, " + minutes + " minutes, and " + seconds + " seconds.",
@@ -497,6 +498,8 @@ $(function() {
 });
 
 document.addEventListener('DOMContentLoaded', function () {
+  if (typeof Notification === 'undefined')
+    return;
   if (Notification.permission !== "granted")
     Notification.requestPermission();
 });

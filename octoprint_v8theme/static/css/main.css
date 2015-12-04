@@ -317,12 +317,6 @@ a.accordion-toggle {
 /*===================================================
    D. Buttons
 =================================================== */
-.btn-primary[disabled], .btn-primary.disabled{
-    background-color: #FA7917;
-}
-.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
-    background-color: #FA7917;
-}
 .btn {
   color: #555555;
   display: inline-block;
@@ -350,6 +344,15 @@ a.accordion-toggle {
   -ms-user-select: none;
   user-select: none;
   filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#80ffffff', endColorstr='#00ffffff', GradientType=0);
+}
+.btn:hover {
+  background-position: 0px;
+  background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.13) 1%, rgba(255, 255, 255, 0.13) 100%)!important;
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.13) 1%, rgba(255, 255, 255, 0.13) 100%)!important;
+}
+.btn:focus {
+  background-color: #f0f0f0;
+  background-position: initial;
 }
 .btn-primary {
   color: #FFF;
@@ -379,16 +382,17 @@ a.accordion-toggle {
   filter: none!important;
   background-image: none!important;
 }
+.btn-primary[disabled], .btn-primary.disabled{
+    background-color: #FA7917;
+}
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+    background-color: #FA7917;
+}
 .btn-danger:hover, .btn-danger:focus, .btn-danger:active, .btn-danger.active, .btn-danger.disabled, .btn-danger[disabled] {
   background-color: #DA4F49;
 }
 .btn:focus, .btn:active {
   outline: none!important;
-}
-.btn:hover, .btn:focus {
-  background-position: 0px;
-  background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.13) 1%, rgba(255, 255, 255, 0.13) 100%)!important;
-  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.13) 1%, rgba(255, 255, 255, 0.13) 100%)!important;
 }
 .custom_section_horizontal form.custom_control, .custom_section_vertical form.custom_control, .custom_section_horizontal_grid form.custom_control {
   display: inline-block;
@@ -399,11 +403,6 @@ a.accordion-toggle {
 }
 .custom_section_vertical .slider, .custom_section_horizontal .slider {
   margin-right: 15px;
-}
-#temperature_wrapper .panel-footer .btn {
-  -webkit-border-radius: 0px;
-  -moz-border-radius: 0px;
-  border-radius: 0px;
 }
 .btn-spread .btn {
   margin-right: 7px;
@@ -459,6 +458,25 @@ a.accordion-toggle {
 .btn .caret {
   margin-left: 0;
   margin-top: 0;
+}
+.btn-group>.btn:first-child {
+  -webkit-border-bottom-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+  -webkit-border-top-left-radius: 2px;
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+}
+.btn-group>.btn:last-child, .btn-group>.dropdown-toggle {
+  -webkit-border-top-right-radius: 2px;
+  border-top-right-radius: 2px;
+  -webkit-border-bottom-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+}
+.input-append .add-on:last-child, .input-append .btn:last-child, .input-append .btn-group:last-child>.dropdown-toggle {
+  -webkit-border-radius: 0 2px 2px 0;
+  -moz-border-radius: 0 2px 2px 0;
+  border-radius: 0 2px 2px 0;
 }
 /*===================================================
    E. Inputs
@@ -616,6 +634,7 @@ input[type="text"].search-query {
     B. Temperature Graph
     C. Progress Bars
     D. Media Panels
+    E. Control Panels
 ===================================================
    A. Icons
 =================================================== */
@@ -653,6 +672,9 @@ input[type="text"].search-query {
 }
 .progress .bar {
   background-image: none!important;
+}
+#gcode_upload_progress {
+  margin-bottom: 10px;
 }
 /*===================================================
    D. Media Panels
@@ -700,6 +722,128 @@ input[type="text"].search-query {
 }
 .media .pull-left {
   margin-right: 0px;
+}
+/*===================================================
+   E. Control Panels
+=================================================== */
+.control-panel-left .jog-panel {
+  display: inline-block;
+  margin-right: 19px;
+  text-align: center;
+}
+.control-panel-right .jog-panel {
+  float: left;
+}
+.jog-panel:last-child, .jog-panel .jog-panel:nth-child(2) {
+  margin-right: 0;
+}
+.control-panel-left .jog-panel>div {
+  text-align: center;
+}
+.control-panel-left .jog-panel>div .btn:last-child {
+  margin-right: 0;
+}
+.control-panel-left .control-box, .control-panel-right .control-box {
+  display: block;
+  height: 30px;
+  margin-bottom: 10px;
+}
+.control-panel-right .control-box {
+  vertical-align: middle;
+}
+.control-panel-left .btn-group, .control-panel-right .btn-group {
+  margin-bottom: 10px;
+}
+.control-panel-left .control-box, .control-panel-right .control-box {
+  height: auto;
+}
+.control-panel-left .box, .control-panel-right .box {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  padding-left: 8px;
+}
+.control-panel-left .box, .control-panel-right .box {
+  display: inline-block!important;
+}
+.control-panel-left .distance, .control-panel-right .distance {
+  display: inline-block;
+}
+.control-panel-left .jog-panel .slider, .control-panel-right .jog-panel .slider {
+    margin-bottom: 10px;
+}
+.control-panel-right .jog-panel .slider {
+  width: 100%!important;
+}
+.control-panel-right .control-box {
+  margin:0;
+  margin-bottom: 15px;
+}
+#control_wrapper .accordion-inner {
+  padding: 0;
+}
+.control-panel-right button.dropdown-toggle {
+  width: auto;
+}
+.control-panel-right .jog-panel:last-child .btn {
+  margin-right: 15px;
+  margin-bottom: 15px;
+}
+.control-panel-left h2 {
+  line-height: 100%;
+}
+.control-panel-right {
+  vertical-align: top!important;
+}
+.control-panel-right > .jog-panel {
+  width: 50%;
+  padding-right: 55px;
+}
+.control-panel-right > .jog-panel > div {
+  padding-left: 15px;
+}
+.control-panel-right .dropdown-menu {
+  width: 100%;
+}
+.control-panel-right .btn.dropdown-toggle {
+  width: 100%;
+}
+.control-panel-right .input-append {
+  display: table;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+.control-panel-right .input-append .input-mini {
+  position: relative;
+  float: left;
+  width: 100%;
+  display: table-cell;
+  border-right: none;
+}
+.control-panel-right .input-append .add-on {
+  white-space: nowrap;
+  vertical-align: middle;
+  display: table-cell;
+  border-collapse: collapse;
+  line-height: 1;
+}
+.control-panel-right .jog-panel:first-child .btn-block:nth-child(3) {
+  float: left;
+  width: 50%;
+  border-right: none;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+.control-panel-right .jog-panel:first-child .btn-block:nth-child(4) {
+  float: left;
+  width: 50%;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+.control-panel-left .box, .control-panel-right .box {
+  padding-top: 4px;
 }
 /* ================================================
     V. COLOR SYSTEM
@@ -853,10 +997,6 @@ span.fileinput-button {
   height: 34px;
   padding: 7px 5px;
 }
-.btn-group>.btn:first-child {
-  border-bottom-left-radius: 0px;
-  border-top-left-radius: 0px;
-}
 .pre-scrollable {
   height: 340px;
 }
@@ -1002,6 +1142,9 @@ span.fileinput-button {
 .border-right {
   border-right: 1px solid #DDD;
 }
+.bt0 {
+  border-top: 0px!important;
+}
 .blr0 {
   border-left: 0px!important;
   border-right: 0px!important;
@@ -1124,6 +1267,30 @@ span.fileinput-button {
     left: inherit;
     right: 0;
   }
+  .upload-buttons span.btn:last-child {
+    margin-left: 2.127659574468085%!important;
+  }
+  .control-panel-right > .jog-panel:first-child {
+    padding-right: 15px;
+  }
+  .control-panel-left > .jog-panel:first-child {
+    width: 100%;
+  }
+  .control-panel-right > .jog-panel:last-child {
+    padding-left: 15px;
+    padding-right: 0;
+  }
+  .control-panel-right > .jog-panel > div {
+    padding-left: 0;
+  }
+  .control-panel-right .input-append {
+    width: 100%;
+  }
+  .control-panel-left .jog-panel .slider, .control-panel-left div.distance, .control-panel-left > .jog-panel > button.btn-block:last-child {
+    display: block!important;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 /*===================================================
    B. 768px and larger
@@ -1179,6 +1346,36 @@ span.fileinput-button {
   .media .span6 {
     width: 100%!important;
   }
+  .control-panel-right > .jog-panel {
+    padding-right: 15px;
+  }
+  .control-panel-right .jog-panel .btn-block {
+    padding-left: 2px;
+    padding-right: 2px;
+  }
+  .control-panel-left .btn.distance {
+    padding: 6px 8px;
+  }
+  .control-panel-left .box {
+    margin-right: 4px;
+    margin-bottom: 4px;
+  }
+  .control-panel-left .jog-panel>div .btn:last-child {
+    margin-right: 0px;
+  }
+  .control-panel-left div.distance {
+    margin-top: 10px;
+  }
+  .control-panel-left > .jog-panel > .jog-panel:first-child {
+    margin-right: 6px;
+  }
+  .control-panel-left .jog-panel .slider, .control-panel-left > .jog-panel > button.btn-block:last-child {
+    width: 100%!important;
+  }
+  .control-panel-left {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
 }
 /*===================================================
    D. 980px and larger
@@ -1194,5 +1391,8 @@ span.fileinput-button {
 @media (min-width: 980px) and (max-width: 1199px) {
   #hotend_temp .span6.pl15, #bed_temp .span6.pl15 {
     padding-left: 0!important;
+  }
+  .control-panel-right .jog-panel .btn-block {
+    padding: 6px;
   }
 }

@@ -7,7 +7,7 @@ class V8themePlugin(octoprint.plugin.AssetPlugin):
     def get_assets(self):
         return dict(
             js=['js/v8theme.js'],
-            css=['css/main.css'],
+            css=['css/main.css']
             #less=['less/my_styles.less']
         )
 

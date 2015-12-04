@@ -3,8 +3,12 @@ $(function() {
     var self = this;
     self.temperature = parameters[0];
     self.terminal = parameters[1];
+    self.custom = parameters[2];
 
-    var flotColors = ["#fbc08d", "#fde0c8", "#ffb6a6", "#ffdbd4"];
+    /* Modified from OctoPrint
+     * Reason: Edit how line numbers are displayed and created a buffer when
+     * autoscroll is disabled.
+     */
     self.terminal.lineCount = ko.computed(function() {
       var total = self.terminal.log().length;
       var displayed = _.filter(self.terminal.displayedLines(), function(entry) {
@@ -23,10 +27,19 @@ $(function() {
         });
       }
     });
+    self.terminal._processCurrentLogData = function(data) {
+      self.terminal.log(self.terminal.log().concat(_.map(data, function(line) { return self.terminal._toInternalFormat(line) })));
+      if (self.terminal.autoscrollEnabled()) {
+        self.terminal.log(self.terminal.log.slice(-self.terminal.buffer()));
+      } else {
+        self.terminal.log(self.terminal.log.slice(-1000));
+      }
+    };
 
     /* Modified from OctoPrint
      * Reason: Edit color options, as well as number of ticks, and min/max values
      */
+    var flotColors = ["#fbc08d", "#fde0c8", "#ffb6a6", "#ffdbd4"];
     self.temperature.plotOptions = {
       grid: {
         show: true,
@@ -93,10 +106,13 @@ $(function() {
     };
 
     self.parseCustomControls = function() {
+      $(".parsed-control").each(function() {
+        $(this).remove();
+      });
       $("#control .custom_section").each(function() {
         var accordionName = $(this).find('h1 span').text();
         accordionName_nospace = accordionName.replace(/\s+/g, '');
-        $("#terminal_wrapper").after("<div id='" + accordionName_nospace + "_wrapper' class='accordion-group'><div class='accordion-heading'><a class='accordion-toggle custom-control-toggle' data-toggle='collapse' data-target='#" + accordionName_nospace + "_main'><i class='icon-info-sign'></i> " + accordionName + " </a></div><div id='" + accordionName_nospace + "_main' class='accordion-body collapse in '><div class='accordion-inner'></div></div>");
+        $("#terminal_wrapper").after("<div id='" + accordionName_nospace + "_wrapper' class='accordion-group parsed-control'><div class='accordion-heading'><a class='accordion-toggle custom-control-toggle' data-toggle='collapse' data-target='#" + accordionName_nospace + "_main'><i class='icon-info-sign'></i> " + accordionName + " </a></div><div id='" + accordionName_nospace + "_main' class='accordion-body collapse in '><div class='accordion-inner'></div></div>");
         var elementHorizontal = $(this).find('.custom_section_horizontal'), elementHorizontalGrid = $(this).find('.custom_section_horizontal_grid'), elementVertical = $(this).find('.custom_section_vertical');
         if (elementHorizontal.length) {
           if (elementHorizontal.hasClass('hide')) {
@@ -304,7 +320,7 @@ $(function() {
               $('<td><div class="bulletColor" style="background-color: ' + series.color + '"></div></td><td class="key">' + series.label + '</td><td class="value">' + series.data[j - 1][1] + '</td>')
             ))
           if ($("#temperature-graph").width() - ($("#tooltip").width() + $("#tooltip").position().left) < 0) {
-            $("#tooltip").css("left", "-=235");
+            $("#tooltip").css("left", "-=265");
           }
           if (($("#temperature-graph").offset().top + $("#temperature-graph").height()) < ($("#tooltip").offset().top + $("#tooltip").height())) {
             $("#tooltip").css("top", "-=50");
@@ -320,8 +336,6 @@ $(function() {
       $(window).resize(function() {
         self.temperature.updatePlot();
       });
-      $("#gcode_upload_progress").next("div").remove();
-      $("#gcode_upload_progress").remove();
 
       $(".nav-collapse").addClass("collapse");
       $(".btn-navbar").click(function() {
@@ -409,6 +423,17 @@ $(function() {
       self.parseCustomControls();
 
       $("#control").appendTo("#control_main .accordion-inner");
+      $('<div class="panel-footer pn bt0"><div class="row-fluid table-layout"><div class="span4 panel-sidemenu border-right control-panel-left"></div><div class="span8 p15 pt20 control-panel-right"></div></div></div>').prependTo("#control_main");
+      $('#control .jog-panel').first().appendTo(".control-panel-left");
+      $('#control .jog-panel').each(function() {
+        $(this).appendTo(".control-panel-right");
+      });
+      $(".control-panel-left h1").each(function(i, em) {
+        $(em).replaceWith('<h2>'+$(em).html()+'</h2>');
+      });
+      $(".control-panel-right h1").each(function(i, em) {
+        $(em).replaceWith('<h4>'+$(em).html()+'</h4>');
+      });
       $("#terminal_main small.pull-left span").css({
         "display": "block",
         "text-align": "right"
@@ -434,24 +459,46 @@ $(function() {
       });
     };
 
-    var lastScrollTop = 0;
-    $("#terminal-output").scroll(function(event) {
-      var st = $(this).scrollTop();
-      if (st < lastScrollTop && self.terminal.autoscrollEnabled()) {
-        self.terminal.autoscrollEnabled(false);
-      } else if (st > lastScrollTop) {
-        if ($(this).scrollTop() + $(this).innerHeight() >= this.scrollHeight) {
-          self.terminal.autoscrollEnabled(true);
-        }
+    self.oldControl = self.custom.rerenderControls;
+    self.custom.rerenderControls = function () {
+      self.oldControl();
+      self.parseCustomControls();
+    }
+
+    self.onEventPrintDone = function(payload) {
+      if (!Notification) {
+        console.log('Desktop notifications not available in your browser. Try Chromium.'); 
+        return;
       }
-      lastScrollTop = st;
-    });
+      if (Notification.permission !== "granted")
+        Notification.requestPermission();
+      else {
+        var time = payload.time;
+        var hours = Math.floor(time / 3600);
+        time = time - hours * 3600;
+        var minutes = Math.floor(time / 60);
+        var seconds = Math.round(time - minutes * 60);
+        var notification = new Notification(payload.filename + ' - Print Complete', {
+          icon: '/plugin/v8theme/static/square_logo.png',
+          body: "Your print is complete after " + hours + " hours, " + minutes + " minutes, and " + seconds + " seconds.",
+        });
+        notification.onclick = function () {
+          window.focus();  
+          notification.close();
+        };
+      }
+    }
   }
 
   OCTOPRINT_VIEWMODELS.push([
-    V8ThemeViewModel, ["temperatureViewModel", "terminalViewModel"],
+    V8ThemeViewModel, ["temperatureViewModel", "terminalViewModel", "customControlViewModel"],
     []
   ]);
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+  if (Notification.permission !== "granted")
+    Notification.requestPermission();
 });
 
 function checkWidth() {

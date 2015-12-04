@@ -22,34 +22,28 @@
   A. Global
 =================================================== */
 @font-face {
-  font-family: 'Open Sans';
+  font-family: 'Lato';
   font-style: normal;
   font-weight: 300;
-  src: local('Open Sans Light'), local('OpenSans-Light'), url(/plugin/v8theme/static/fonts/OpenSans-Light.ttf) format('truetype');
+  src: local('Lato Light'), local('Lato-Light'), url(/plugin/v8theme/static/fonts/Lato-Light.ttf) format('truetype');
 }
 @font-face {
-  font-family: 'Open Sans';
+  font-family: 'Lato';
   font-style: normal;
   font-weight: 400;
-  src: local('Open Sans'), local('OpenSans'), url(/plugin/v8theme/static/fonts/OpenSans-Regular.ttf) format('truetype');
+  src: local('Lato Regular'), local('Lato-Regular'), url(/plugin/v8theme/static/fonts/Lato-Regular.ttf) format('truetype');
 }
 @font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 600;
-  src: local('Open Sans Semibold'), local('OpenSans-Semibold'), url(/plugin/v8theme/static/fonts/OpenSans-Semibold.ttf) format('truetype');
-}
-@font-face {
-  font-family: 'Open Sans';
+  font-family: 'Lato';
   font-style: normal;
   font-weight: 700;
-  src: local('Open Sans Bold'), local('OpenSans-Bold'), url(/plugin/v8theme/static/fonts/OpenSans-Bold.ttf) format('truetype');
+  src: local('Lato Bold'), local('Lato-Bold'), url(/plugin/v8theme/static/fonts/Lato-Bold.ttf) format('truetype');
 }
 @font-face {
-  font-family: 'Open Sans';
+  font-family: 'Lato';
   font-style: normal;
   font-weight: 800;
-  src: local('Open Sans Extrabold'), local('OpenSans-Extrabold'), url(/plugin/v8theme/static/fonts/OpenSans-ExtraBold.ttf) format('truetype');
+  src: local('Lato Black'), local('Lato-Black'), url(/plugin/v8theme/static/fonts/Lato-Black.ttf) format('truetype');
 }
 * {
   -webkit-box-sizing: border-box;
@@ -58,7 +52,7 @@
 }
 body {
   background-color: #e8e8e8;
-  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+  font-family: 'Lato', Helvetica, Arial, sans-serif;
   color: #666666;
   -webkit-font-smoothing: antialiased;
   /* Fix for webkit rendering */
@@ -89,8 +83,8 @@ body {
 ================================================= */
 h1, h2, h3, h4, h5, h6 {
   margin: 0;
-  font-family: 'Open Sans', sans-serif;
-  font-weight: 600;
+  font-family: 'Lato', Helvetica, Arial, sans-serif;
+  font-weight: 700;
   color: inherit;
   text-rendering: optimizelegibility;
   margin-bottom: 10px;
@@ -275,7 +269,7 @@ h1 small, h2 small, h3 small, h4 small, h5 small, h6 small {
   line-height: 40px;
   color: #666;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   border-radius: 2px 2px 0 0;
   background: #fafafa;
 }
@@ -692,7 +686,7 @@ input[type="text"].search-query {
 }
 .media > span.pull-left {
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 700;
   text-align: center;
 }
 .media-body {
@@ -932,7 +926,7 @@ span.fileinput-button {
   min-width: 10px;
   padding: 3px 7px;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
   color: #fff;
   line-height: 1;
   vertical-align: baseline;
@@ -949,13 +943,13 @@ span.fileinput-button {
 }
 #files .gcode_files .entry .title {
   color: #666;
-  font-weight: 600!important;
+  font-weight: 700!important;
 }
 .label {
   display: inline;
   padding: .3em .7em .4em;
   font-size: 84%;
-  font-weight: 600;
+  font-weight: 700;
   line-height: 24px;
   color: #fff;
   text-align: center;
@@ -1032,7 +1026,7 @@ span.fileinput-button {
   background-color: transparent;
 }
 #temperature_wrapper label {
-  font-weight: 600;
+  font-weight: 700;
 }
 /*=================================================
  VII. HELPERS

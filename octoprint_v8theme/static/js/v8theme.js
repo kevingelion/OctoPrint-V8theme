@@ -3,7 +3,8 @@ $(function() {
     var self = this;
     self.temperature = parameters[0];
     self.terminal = parameters[1];
-    self.customControls = parameters[2];
+    self.files = parameters[2];
+    self.customControls = parameters[3];
 
     /* Modified from OctoPrint
      * Reason: Edit how line numbers are displayed and created a buffer when
@@ -457,6 +458,11 @@ $(function() {
           toggleButton.removeClass('hide');
         }
       });
+      if (typeof localStorage["voxel8.gcodeFiles.currentSorting"] === "undefined") {
+        self.currentSorting = "upload";
+        localStorage["voxel8.gcodeFiles.currentSorting"] = self.currentSorting;
+        self.files.listHelper.changeSorting(self.currentSorting);
+      }
     };
 
     self.oldControl = self.customControls.rerenderControls;
@@ -492,7 +498,7 @@ $(function() {
   }
 
   OCTOPRINT_VIEWMODELS.push([
-    V8ThemeViewModel, ["temperatureViewModel", "terminalViewModel", "customControlViewModel"],
+    V8ThemeViewModel, ["temperatureViewModel", "terminalViewModel", "gcodeFilesViewModel", "customControlViewModel"],
     []
   ]);
 });

@@ -473,7 +473,7 @@ $(function() {
       if (Notification.permission !== "granted")
         Notification.requestPermission();
       else {
-        var imeInSecs = payload.time;
+        var timeInSecs = payload.time;
         var hours = Math.floor(timeInSecs / 3600);
         timeInSecs = timeInSecs % 3600;
         var minutes = Math.floor(timeInSecs / 60);

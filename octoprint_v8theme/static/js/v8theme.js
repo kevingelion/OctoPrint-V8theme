@@ -331,7 +331,7 @@ $(function() {
               $('<td><div class="bulletColor" style="background-color: ' + series.color + '"></div></td><td class="key">' + series.label + '</td><td class="value">' + series.data[j - 1][1] + '</td>')
             ))
           if ($("#temperature-graph").width() - ($("#tooltip").width() + $("#tooltip").position().left) < 0) {
-            $("#tooltip").css("left", "-=265");
+            $("#tooltip").css("left", "-=285");
           }
           if (($("#temperature-graph").offset().top + $("#temperature-graph").height()) < ($("#tooltip").offset().top + $("#tooltip").height())) {
             $("#tooltip").css("top", "-=50");

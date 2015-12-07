@@ -106,6 +106,11 @@ $(function() {
       }
     };
 
+    self.hideToolTip = function() {
+      $("#tooltip_bar, #tooltip").css("display", "none");
+      if (typeof self.temperature.plot !== "undefined") self.temperature.plot.unhighlight();
+    }
+
     self.parseCustomControls = function() {
       $(".parsed-control").each(function() {
         $(this).remove();
@@ -187,7 +192,7 @@ $(function() {
 
         /* Hide tooltip and overlay bar every time we update the plot */
         self.temperature.plot = $.plot(graph, data, self.temperature.plotOptions);
-        $("#tooltip_bar, #tooltip").css("display", "none");
+        self.hideToolTip();
       }
     };
 
@@ -292,10 +297,12 @@ $(function() {
 
       function updateLegend() {
         updateLegendTimeout = null;
-        self.temperature.plot.unhighlight();
-        $("#tooltip_bar, #tooltip").css("display", "none");
+        self.hideToolTip();
         var pos = latestPosition,
           axes = self.temperature.plot.getAxes();
+        // if ($("#navbar_systemmenu").hasClass("open")) {
+        //   return;
+        // }
         if (pos.x < axes.xaxis.min || pos.x > axes.xaxis.max || pos.y < axes.yaxis.min || pos.y > axes.yaxis.max) return;
         var dataset = self.temperature.plot.getData();
         if (dataset.length <= 0 || typeof dataset[0].data[1] === "undefined") return;
@@ -341,8 +348,10 @@ $(function() {
         self.temperature.updatePlot();
       });
       $("#temperature_main").mouseleave(function() {
-        $("#tooltip_bar, #tooltip").css("display", "none");
-        if (typeof self.temperature.plot !== "undefined") self.temperature.plot.unhighlight();
+        self.hideToolTip();
+      });
+      $("#navbar ul, #navbar li").mouseenter(function() {
+        self.hideToolTip();
       });
 
       $(".nav-collapse").addClass("collapse");

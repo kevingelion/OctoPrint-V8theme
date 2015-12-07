@@ -972,7 +972,7 @@ span.fileinput-button {
   top: 45px;
   border: 1px solid rgba(0, 0, 0, 0.12);
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
-  z-index: 10000;
+  z-index: 999;
   font-family: Arial;
   font-size: 12px;
   text-align: left;

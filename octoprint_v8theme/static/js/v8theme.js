@@ -77,15 +77,9 @@ $(function() {
         minTickSize: [2, "minute"],
         tickFormatter: function(val, axis) {
           if (val == undefined || val == 0)
-            return ""; // we don't want to display the minutes since the epoch if not connected yet ;)
-
-          // current time in milliseconds in UTC
+            return "";
           var timestampUtc = Date.now();
-
-          // calculate difference in milliseconds
           var diff = timestampUtc - val;
-
-          // convert to minutes
           var diffInMins = Math.round(diff / (60 * 1000));
           if (diffInMins == 0)
             return gettext("just now");
@@ -273,18 +267,7 @@ $(function() {
           height: ($("#temperature-graph").height() == 250) ? 485 : 235
         }, 250);
       });
-      $("<div id='tooltip_bar'></div>").css({
-        position: "absolute",
-        "display": "none",
-        border: "1px solid #BFBFBF",
-        padding: "2px",
-        "background-color": "#000",
-        opacity: 0.04,
-        "height": "235px",
-        "width": "35px",
-        "top": "15px"
-      }).appendTo("#temperature_main .accordion-inner");
-      $("<div id='tooltip'><table><tbody></tbody></table></div>").appendTo("#temperature_main .accordion-inner");
+      $("<div id='tooltip_bar'><div id='tooltip'><table><tbody></tbody></table></div></div>").appendTo("#temperature_main .accordion-inner");
 
       var legends = $("#temperature-graph .legendLabel");
       legends.each(function() {
@@ -300,9 +283,6 @@ $(function() {
         self.hideToolTip();
         var pos = latestPosition,
           axes = self.temperature.plot.getAxes();
-        // if ($("#navbar_systemmenu").hasClass("open")) {
-        //   return;
-        // }
         if (pos.x < axes.xaxis.min || pos.x > axes.xaxis.max || pos.y < axes.yaxis.min || pos.y > axes.yaxis.max) return;
         var dataset = self.temperature.plot.getData();
         if (dataset.length <= 0 || typeof dataset[0].data[1] === "undefined") return;
@@ -318,11 +298,12 @@ $(function() {
           self.temperature.plot.highlight(i, j - 1);
           $("#tooltip_bar").css({
             "display": "block",
-            "left": axes.xaxis.p2c(series.data[j - 1][0]) + 17.5
+            "left": axes.xaxis.p2c(series.data[j - 1][0]) + 21
           });
           $("#tooltip").css({
             "display": "block",
-            "left": axes.xaxis.p2c(series.data[j - 1][0]) + 85,
+            "left": "55px",
+            "right": "auto",
             "top": Math.ceil((pos.pageY - $("#temperature-graph").offset().top - 40) / 50.0) * 50
           });
           legends.eq(i).text(series.label.replace(/=.*/, "= " + series.data[j - 1][1].toFixed(2)));
@@ -330,11 +311,11 @@ $(function() {
             $('<tr>').append(
               $('<td><div class="bulletColor" style="background-color: ' + series.color + '"></div></td><td class="key">' + series.label + '</td><td class="value">' + series.data[j - 1][1] + '</td>')
             ))
-          if ($("#temperature-graph").width() - ($("#tooltip").width() + $("#tooltip").position().left) < 0) {
-            $("#tooltip").css("left", "-=285");
+          if ($("#temperature-graph").width() - ($("#tooltip").width() + $("#tooltip_bar").position().left + $("#tooltip").position().left) < 0) {
+            $("#tooltip").css({"right": "55px", "left": "auto"});
           }
           if (($("#temperature-graph").offset().top + $("#temperature-graph").height()) < ($("#tooltip").offset().top + $("#tooltip").height())) {
-            $("#tooltip").css("top", "-=50");
+            $("#tooltip").css("top", "-=75");
           }
         }
       }
@@ -459,6 +440,7 @@ $(function() {
       $("#temp").remove();
       $("#term").remove();
       $("#webcam_container, #control_main div[data-bind*='keycontrolPossible']").remove();
+
       // Manage extra contents of .tab-content 
       $("#gcode").remove();
       var tabContentHTML = $(".main-content-wrapper").html().replace(/<!-- ko allowBindings: false -->|<!-- \/ko -->|<!-- ko allowBindings: true -->/g, "");
@@ -503,7 +485,7 @@ $(function() {
         var seconds = timeInSecs;
         var notification = new Notification(payload.filename + ' - Print Complete', {
           icon: '/plugin/v8theme/static/square_logo.png',
-          body: "Your print is complete after " + hours + " hours, " + minutes + " minutes, and " + seconds + " seconds.",
+          body: "Your print is complete after " + hours + " hour(s), " + minutes + " minute(s), and " + seconds + " second(s).",
         });
         notification.onclick = function () {
           window.focus();  

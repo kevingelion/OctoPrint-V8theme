@@ -657,6 +657,37 @@ input[type="text"].search-query {
   background-image: none !important;
   height: 250px;
 }
+#tooltip_bar {
+  position: absolute;
+  display: none;
+  border: 1px solid rgba(191, 191, 191, 0.1);
+  padding: 2px;
+  background-color: rgba(0, 0, 0, 0.04);
+  height: 235px;
+  width: 35px;
+  top: 15px;
+}
+#tooltip {
+  position: absolute;
+  display: none;
+  left: 55px;
+  background-color: rgba(255, 255, 255, 1);
+  padding: 1px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+  font-family: Arial;
+  font-size: 12px;
+  text-align: left;
+  pointer-events: none;
+  white-space: nowrap;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
 /*===================================================
    C. Progress Bars
 =================================================== */
@@ -964,27 +995,6 @@ span.fileinput-button {
 #control_wrapper .btn {
   display: inherit;
 }
-#temperature_wrapper #tooltip {
-  position: absolute;
-  display: none;
-  background-color: rgba(255, 255, 255, 1);
-  padding: 1px;
-  top: 45px;
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
-  z-index: 999;
-  font-family: Arial;
-  font-size: 12px;
-  text-align: left;
-  pointer-events: none;
-  white-space: nowrap;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
 .bulletColor {
   width: 8px;
   height: 8px;
@@ -1054,14 +1064,14 @@ span.fileinput-button {
 /*===================================================
   B. Table Layout
 =================================================== */
-#temperature_wrapper #tooltip table {
+#tooltip table {
   margin: 12px 10px 14px 15px;
   font-size: 12px;
   border-spacing: 0;
   border-collapse: collapse;
   background-color: transparent;
 }
-#temperature_wrapper #tooltip table td {
+#tooltip table td {
   padding: 2px 9px 2px 0;
   vertical-align: middle;
 }

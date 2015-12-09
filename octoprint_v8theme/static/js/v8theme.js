@@ -4,7 +4,8 @@ $(function() {
     self.temperature = parameters[0];
     self.terminal = parameters[1];
     self.files = parameters[2];
-    self.customControls = parameters[3];
+    self.settings = parameters[3];
+    self.customControls = parameters[4];
 
     /* Modified from OctoPrint
      * Reason: Edit how line numbers are displayed and created a buffer when
@@ -201,10 +202,9 @@ $(function() {
 
       $("#settings_dialog_label").text("Settings");
       document.title = "Voxel8 DevKit";
-
-      // Merge Control and Terminal tabs
       $("#navbar .brand").html("<img src='/plugin/v8theme/static/logo.png' />");
 
+      // Merge Control and Terminal tabs
       $("#term_link").remove();
       $("#gcode_link").remove();
       $("#tabs").remove();
@@ -408,6 +408,18 @@ $(function() {
         }
       }, 375, {trailing: false}, {leading: false}));
 
+      // Render printer name on the page
+      $.ajax({
+        url: "/api/plugin/v8theme",
+        type: "GET",
+        dataType: "json",
+        success: function(response) {
+          if (response.printerName != "") {
+            document.title = response.printerName + " \u2013 " + document.title;
+            $(".btn-navbar").after("<ul class='nav pull-left'><li><img class='printer-icon' src='plugin/v8theme/static/icon-printer.png'/><span id='printer_name'>" + response.printerName + "</span></li></ul>");
+          }
+        }
+      });
     };
 
     self.onAfterTabChange = function(current, previous) {
@@ -496,7 +508,7 @@ $(function() {
   }
 
   OCTOPRINT_VIEWMODELS.push([
-    V8ThemeViewModel, ["temperatureViewModel", "terminalViewModel", "gcodeFilesViewModel", "customControlViewModel"],
+    V8ThemeViewModel, ["temperatureViewModel", "terminalViewModel", "gcodeFilesViewModel", "settingsViewModel", "customControlViewModel"],
     []
   ]);
 });

@@ -219,6 +219,23 @@ h1 small, h2 small, h3 small, h4 small, h5 small, h6 small {
 .navbar .brand, .navbar li {
   line-height: 40px;
 }
+.nav.pull-left {
+  margin-left: 105px;
+}
+.nav.pull-left span {
+  float: none;
+  padding: 10px 15px 10px 6px;
+  text-shadow: 0 1px 0 #fff;
+  color: #333;
+  display: inline-block;
+  font-size: 14px;
+}
+.nav.pull-left img.printer-icon {
+  height: 15px;
+  display: inline-block;
+  margin-left: 10px;
+  vertical-align: middle;
+}
 #navbar .brand {
   position: absolute;
   padding-top: 0;

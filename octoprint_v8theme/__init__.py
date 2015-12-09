@@ -2,8 +2,12 @@
 from __future__ import absolute_import
 
 import octoprint.plugin
+import flask
 
-class V8themePlugin(octoprint.plugin.AssetPlugin):
+class V8themePlugin(octoprint.plugin.SettingsPlugin,
+                    octoprint.plugin.AssetPlugin,
+                    octoprint.plugin.SimpleApiPlugin,
+                    octoprint.plugin.StartupPlugin):
     def get_assets(self):
         return dict(
             js=['js/v8theme.js'],
@@ -11,6 +15,19 @@ class V8themePlugin(octoprint.plugin.AssetPlugin):
             #less=['less/my_styles.less']
         )
 
+    def get_settings_defaults(self):
+        return dict(
+            printer_name=""
+        )
+
+    def on_after_startup(self):
+        self.printer_name = self._settings.get(["printer_name"])
+
+    def on_api_get(self, request):
+        if self.printer_name:
+            return flask.jsonify(printerName=self.printer_name)
+        else:
+            return flask.jsonify(printerName="")
 
 def get_update_information(*args, **kwargs):
     return dict(

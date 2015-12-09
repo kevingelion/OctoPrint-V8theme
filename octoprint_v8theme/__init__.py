@@ -15,19 +15,14 @@ class V8themePlugin(octoprint.plugin.SettingsPlugin,
             #less=['less/my_styles.less']
         )
 
-    def get_settings_defaults(self):
+    def get_api_commands(self):
         return dict(
-            printer_name=""
+            update_printer_name=[]
         )
 
-    def on_after_startup(self):
-        self.printer_name = self._settings.get(["printer_name"])
-
-    def on_api_get(self, request):
-        if self.printer_name:
-            return flask.jsonify(printerName=self.printer_name)
-        else:
-            return flask.jsonify(printerName="")
+    def on_api_command(self, command, data):
+        if command == "update_printer_name":
+            self._plugin_manager.send_plugin_message(self._identifier, dict(printer_name=data.get("printer_name")))
 
 def get_update_information(*args, **kwargs):
     return dict(

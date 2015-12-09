@@ -407,19 +407,6 @@ $(function() {
           $(this).find('.heading_buttons').fadeIn('150');
         }
       }, 375, {trailing: false}, {leading: false}));
-
-      // Render printer name on the page
-      $.ajax({
-        url: "/api/plugin/v8theme",
-        type: "GET",
-        dataType: "json",
-        success: function(response) {
-          if (response.printerName != "") {
-            document.title = response.printerName + " \u2013 " + document.title;
-            $(".btn-navbar").after("<ul class='nav pull-left'><li><img class='printer-icon' src='plugin/v8theme/static/icon-printer.png'/><span id='printer_name'>" + response.printerName + "</span></li></ul>");
-          }
-        }
-      });
     };
 
     self.onAfterTabChange = function(current, previous) {
@@ -503,6 +490,26 @@ $(function() {
           window.focus();  
           notification.close();
         };
+      }
+    }
+
+    self.onDataUpdaterPluginMessage = function(plugin, data) {
+      if (plugin === "v8theme") {
+        if (data.printer_name) {
+          if (document.title !== "Voxel8 DevKit") {
+            document.title = data.printer_name + " \u2013 Voxel8 DevKit";
+          } else {
+            document.title = data.printer_name + " \u2013 " + document.title;
+          }
+          if ($(".nav.pull-left").length ) {
+            $("#printer_name").text(data.printer_name);
+          } else {
+            $(".btn-navbar").after("<ul class='nav pull-left'><li><img class='printer-icon' src='plugin/v8theme/static/icon-printer.png'/><span id='printer_name'>" + data.printer_name + "</span></li></ul>");
+          }
+        } else {
+          document.title = "Voxel8 DevKit";
+          $(".nav.pull-left").remove();
+        }
       }
     }
   }

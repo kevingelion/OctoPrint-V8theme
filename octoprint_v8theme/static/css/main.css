@@ -264,7 +264,7 @@ nav.pull-left {
 }
 .nav.pull-left img.printer-icon {
   height: 15px;
-  display: none;
+  display: inline-block;
   margin-left: 10px;
   vertical-align: middle;
   margin-top: -2px;

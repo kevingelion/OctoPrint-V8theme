@@ -529,7 +529,7 @@ $(function() {
         document.title = printerName + " \u2013 " + document.title;
       }
       $(".printer_name_span").text(printerName);
-      $(".nav.pull-left").css("display", "inline");
+      $(".nav.pull-left").css("display", "block");
     }
 
     self.hidePrinterName = function() {

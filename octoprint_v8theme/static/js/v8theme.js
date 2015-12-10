@@ -419,11 +419,11 @@ $(function() {
           if (response.printer_name && response.printer_name != "") {
             self.setPrinterName(response.printer_name);
           } else {
-            self.hidePrinterName;
+            self.hidePrinterName();
           }
         },
         error: function(jqXHR, exception) {
-          self.hidePrinterName;
+          self.hidePrinterName();
         }
       });
     };

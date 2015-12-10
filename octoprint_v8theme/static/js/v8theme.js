@@ -407,6 +407,25 @@ $(function() {
           $(this).find('.heading_buttons').fadeIn('150');
         }
       }, 375, {trailing: false}, {leading: false}));
+
+      $(".navbar-inner .nav-collapse, .btn-navbar").after("<div class='pull-left-container'><ul class='nav pull-left'><li><img class='printer-icon' src='plugin/v8theme/static/icon-printer.png'/><span class='printer_name_span'></span></li></ul></div>");
+      $(".btn-navbar").wrap("<div class='btn-nav-container'></div>");
+      $.ajax({
+        type: "GET",
+        url: "/api/plugin/v8theme",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function(response) {
+          if (response.printer_name && response.printer_name != "") {
+            self.setPrinterName(response.printer_name);
+          } else {
+            self.hidePrinterName;
+          }
+        },
+        error: function(jqXHR, exception) {
+          self.hidePrinterName;
+        }
+      });
     };
 
     self.onAfterTabChange = function(current, previous) {
@@ -496,21 +515,26 @@ $(function() {
     self.onDataUpdaterPluginMessage = function(plugin, data) {
       if (plugin === "v8theme") {
         if (data.printer_name) {
-          if (document.title !== "Voxel8 DevKit") {
-            document.title = data.printer_name + " \u2013 Voxel8 DevKit";
-          } else {
-            document.title = data.printer_name + " \u2013 " + document.title;
-          }
-          if ($(".nav.pull-left").length ) {
-            $("#printer_name").text(data.printer_name);
-          } else {
-            $(".btn-navbar").after("<ul class='nav pull-left'><li><img class='printer-icon' src='plugin/v8theme/static/icon-printer.png'/><span id='printer_name'>" + data.printer_name + "</span></li></ul>");
-          }
+          self.setPrinterName(data.printer_name);
         } else {
-          document.title = "Voxel8 DevKit";
-          $(".nav.pull-left").remove();
+          self.hidePrinterName();
         }
       }
+    }
+
+    self.setPrinterName = function(printerName) {
+      if (document.title !== "Voxel8 DevKit") {
+        document.title = printerName + " \u2013 Voxel8 DevKit";
+      } else {
+        document.title = printerName + " \u2013 " + document.title;
+      }
+      $(".printer_name_span").text(printerName);
+      $(".printer-icon, .nav.pull-left").css("display", "inline");
+    }
+
+    self.hidePrinterName = function() {
+      document.title = "Voxel8 DevKit";
+      $(".printer-icon, .nav.pull-left").css("display", "none");
     }
   }
 

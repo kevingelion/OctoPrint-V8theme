@@ -216,28 +216,63 @@ h1 small, h2 small, h3 small, h4 small, h5 small, h6 small {
 .navbar .nav .dropdown-toggle .caret {
   margin-top: 0px;
 }
+.navbar .nav {
+  margin: 0;
+}
 .navbar .brand, .navbar li {
   line-height: 40px;
 }
 .nav.pull-left {
-  margin-left: 105px;
+  padding-left: 105px;
+  overflow: hidden;
+  width: auto;
+  display: inline-block;
+  width: 100%;
+  overflow: hidden;
+}
+.nav.pull-left li {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  line-height: 40px;
+  padding: 10px 0;
+}
+.testing_shit {
+  background:blue;
+  float:right;
+}
+.navbar-inner > .container .pull-left-container {
+  width: auto;
+  overflow: hidden;
+}
+.btn-nav-container {
+  float: right;
+}
+nav.pull-left {
+  display: none;
 }
 .nav.pull-left span {
+  width: 100%;
   float: none;
   padding: 10px 15px 10px 6px;
   text-shadow: 0 1px 0 #fff;
   color: #333;
-  display: inline-block;
+  display: inline;
   font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-left: 6px;
 }
 .nav.pull-left img.printer-icon {
   height: 15px;
   display: inline-block;
   margin-left: 10px;
   vertical-align: middle;
+  margin-top: -2px;
 }
 #navbar .brand {
   position: absolute;
+  top: 0;
   padding-top: 0;
 }
 #navbar .brand img {
@@ -1319,6 +1354,9 @@ span.fileinput-button {
   .control-panel-right .jog-panel:first-child .btn-block:nth-child(3), .control-panel-right .jog-panel:first-child .btn-block:nth-child(4) {
     padding: 6px;
   }
+  .navbar-inner .nav-collapse + .pull-left-container {
+    display: none;
+  }
 }
 /*===================================================
    B. 768px and larger
@@ -1343,6 +1381,9 @@ span.fileinput-button {
   }
   .table-layout::after, .table-layout::before {
     content: initial!important;
+  }
+  .btn-nav-container + .pull-left-container {
+    display: none;
   }
 }
 /*===================================================

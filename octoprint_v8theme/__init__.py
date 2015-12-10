@@ -8,6 +8,8 @@ class V8themePlugin(octoprint.plugin.SettingsPlugin,
                     octoprint.plugin.AssetPlugin,
                     octoprint.plugin.SimpleApiPlugin,
                     octoprint.plugin.StartupPlugin):
+
+    printer_name = ""
     def get_assets(self):
         return dict(
             js=['js/v8theme.js'],
@@ -22,7 +24,11 @@ class V8themePlugin(octoprint.plugin.SettingsPlugin,
 
     def on_api_command(self, command, data):
         if command == "update_printer_name":
-            self._plugin_manager.send_plugin_message(self._identifier, dict(printer_name=data.get("printer_name")))
+            self.printer_name = data.get("printer_name")
+            self._plugin_manager.send_plugin_message(self._identifier, dict(printer_name=self.printer_name))
+
+    def on_api_get(self, request):
+        return flask.jsonify(printer_name=self.printer_name)
 
 def get_update_information(*args, **kwargs):
     return dict(

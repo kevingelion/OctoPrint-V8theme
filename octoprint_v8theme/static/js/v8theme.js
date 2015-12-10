@@ -529,12 +529,12 @@ $(function() {
         document.title = printerName + " \u2013 " + document.title;
       }
       $(".printer_name_span").text(printerName);
-      $(".printer-icon, .nav.pull-left").css("display", "inline");
+      $(".nav.pull-left").css("display", "inline");
     }
 
     self.hidePrinterName = function() {
       document.title = "Voxel8 DevKit";
-      $(".printer-icon, .nav.pull-left").css("display", "none");
+      $(".nav.pull-left").css("display", "none");
     }
   }
 

@@ -224,9 +224,8 @@ h1 small, h2 small, h3 small, h4 small, h5 small, h6 small {
 }
 .nav.pull-left {
   padding-left: 105px;
-  overflow: hidden;
   width: auto;
-  display: inline-block;
+  display: none;
   width: 100%;
   overflow: hidden;
 }
@@ -265,7 +264,7 @@ nav.pull-left {
 }
 .nav.pull-left img.printer-icon {
   height: 15px;
-  display: inline-block;
+  display: none;
   margin-left: 10px;
   vertical-align: middle;
   margin-top: -2px;

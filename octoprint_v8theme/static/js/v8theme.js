@@ -117,7 +117,8 @@ $(function() {
       $("#control .custom_section").each(function() {
         var accordionName = $(this).find('h1 span').text();
         accordionNameClean = accordionName.replace(/[^a-zA-Z0-9]/g,'');
-        $("#terminal_wrapper").after("<div id='" + accordionNameClean + "_wrapper' class='accordion-group parsed-control'><div class='accordion-heading'><a class='accordion-toggle custom-control-toggle' data-toggle='collapse' data-target='#" + accordionNameClean + "_main'><i class='icon-info-sign'></i> " + accordionName + " </a></div><div id='" + accordionNameClean + "_main' class='accordion-body collapse in '><div class='accordion-inner'></div></div>");
+        $("#terminal_wrapper").after("<div id='" + accordionNameClean + "_wrapper' class='accordion-group parsed-control'><div class='accordion-heading'><a class='accordion-toggle custom-control-toggle' data-toggle='collapse' data-target='#" + accordionNameClean + "_main'><i class='icon-info-sign'></i><span></span></a></div><div id='" + accordionNameClean + "_main' class='accordion-body collapse in '><div class='accordion-inner'></div></div>");
+        $("#" + accordionNameClean + "_wrapper .accordion-heading span").text(accordionName);
         var elementHorizontal = $(this).find('.custom_section_horizontal'), elementHorizontalGrid = $(this).find('.custom_section_horizontal_grid'), elementVertical = $(this).find('.custom_section_vertical');
         if (elementHorizontal.length) {
           if (elementHorizontal.hasClass('hide')) {

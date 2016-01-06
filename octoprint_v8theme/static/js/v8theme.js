@@ -106,10 +106,14 @@ $(function() {
       if (typeof self.temperature.plot !== "undefined") self.temperature.plot.unhighlight();
     }
 
-    self.parseCustomControls = function() {
+    self.customControls.onEventSettingsUpdated = function (payload) {
       $(".parsed-control").each(function() {
         $(this).remove();
       });
+      self.customControls.requestData();
+    }
+
+    self.parseCustomControls = function() {
       $("#control .custom_section").each(function() {
         var accordionName = $(this).find('h1 span').text();
         accordionNameClean = accordionName.replace(/[^a-zA-Z0-9]/g,'');

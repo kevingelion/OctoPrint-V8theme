@@ -146,84 +146,84 @@ $(function() {
     self.getAdditionalControls = function() {
       return [
         {
-          'children': [
+          "children": [
           {
-            'command': 'M125 S%(tpressure)s',
-            'input': [{
-              'default': '40',
-              'name': 'Tank Pressure',
-              'parameter': 'tpressure',
-              'slider': 'false'
+            "command": "M125 S%(tpressure)s",
+            "input": [{
+              "default": "40",
+              "name": "Tank Pressure",
+              "parameter": "tpressure",
+              "slider": "false"
             }],
-            'name': 'Set',
-            'offset': '0',
-            'width': '6'
+            "name": "Set",
+            "offset": "0",
+            "width": "6"
           },
           {
-            'command': 'M236 S%(epressure)s',
-            'input': [{
-              'default': '18',
-              'name': 'Extrusion Pressure',
-              'parameter': 'epressure',
-              'slider': 'false'
+            "command": "M236 S%(epressure)s",
+            "input": [{
+              "default": "18",
+              "name": "Extrusion Pressure",
+              "parameter": "epressure",
+              "slider": "false"
             }],
-            'name': 'Set',
-            'offset': '0',
-            'width': '6'
+            "name": "Set",
+            "offset": "0",
+            "width": "6"
           },
           {
-            'command': 'M42 P2 S0',
-            'name': 'Close Valve',
-            'width': '3'
+            "command": "M42 P2 S0",
+            "name": "Close Valve",
+            "width": "3"
           },
           {
-            'command': 'M42 P2 S255',
-            'name': 'Open Valve',
-            'width': '3'
+            "command": "M42 P2 S255",
+            "name": "Open Valve",
+            "width": "3"
           }],
-          'layout': 'horizontal_grid',
-          'name': 'Pneumatics'
+          "layout": "horizontal_grid",
+          "name": "Pneumatics"
         },
         {
-          'children': [
+          "children": [
           {
-            'commands': [
-              'M851 Z-3',
-              'G28',
-              'G29',
-              'G1 Z0.5',
-              'G92 Z10.5'
+            "commands": [
+              "M851 Z-3",
+              "G28",
+              "G29",
+              "G1 Z0.5",
+              "G92 Z10.5"
             ],
-            'name': 'Start Bed Re-Zeroing'
+            "name": "Start Bed Re-Zeroing"
           },
           {
-            'commands': [
-              'G91',
-              'G1 Z0.025',
-              'G90'
+            "commands": [
+              "G91",
+              "G1 Z0.025",
+              "G90"
             ],
-            'name': '▲'
+            "name": "▲"
           },
           {
-            'commands': [
-              'G91',
-              'G1 Z-0.025',
-              'G90'
+            "commands": [
+              "G91",
+              "G1 Z-0.025",
+              "G90"
             ],
-            'name': '▼'
+            "name": "▼"
           },
           {
-            'commands': [
-              'M852 Z10',
-              'G92 Z0',
-              'G1 Z10',
-              'G28 X Y'
+            "commands": [
+              "M852 Z10",
+              "G92 Z0",
+              "G1 Z10",
+              "G28 X Y"
             ],
-            'name': 'Set Bed Zero'
+            "name": "Set Bed Zero"
           }],
-          'collapsed': 'true',
-          'layout': 'horizontal',
-          'name': 'Bed Calibration'
+          "collapsed": "true",
+          "layout": "horizontal",
+          "name": "Bed Calibration"
         }
       ];
     }
@@ -237,15 +237,32 @@ $(function() {
       self.customControls.requestData();
     }
 
+    self.generateWrapperName = function(name, increment) {
+      if (increment) {
+        if ($(".octoprint-container").find("#" + name + "_" + increment + "_wrapper").length > 0) {
+          return self.generateWrapperName(name, ++increment);
+        } else {
+          return name + "_" + increment + "_wrapper";
+        }
+      } else {
+        if ($(".octoprint-container").find("#" + name + "_wrapper").length > 0) {
+          return self.generateWrapperName(name, 1);
+        } else {
+          return name + "_wrapper";
+        }
+      }
+    }
+
     self.parseCustomControls = function() {
       $("#control .custom_section").each(function() {
         var accordionName = $(this).find('h1 span').text();
-        accordionNameClean = accordionName.replace(/[^a-zA-Z0-9]/g,'');
-        $("#terminal_wrapper").after("<div id='" + accordionNameClean + "_wrapper' class='accordion-group parsed-control'><div class='accordion-heading'><a class='accordion-toggle custom-control-toggle' data-toggle='collapse' data-target='#" + accordionNameClean + "_main'><i class='icon-info-sign'></i><span></span></a></div><div id='" + accordionNameClean + "_main' class='accordion-body collapse in '><div class='accordion-inner'></div></div>");
+        var accordionNameClean = accordionName.replace(/[^a-zA-Z0-9]/g,'');
+        var elementName = self.generateWrapperName(accordionNameClean);
+        $("#terminal_wrapper").after("<div id='" + elementName + "' class='accordion-group parsed-control'><div class='accordion-heading'><a class='accordion-toggle custom-control-toggle' data-toggle='collapse' data-target='#" + accordionNameClean + "_main'><i class='icon-info-sign'></i><span></span></a></div><div id='" + accordionNameClean + "_main' class='accordion-body collapse in '><div class='accordion-inner'></div></div>");
         if ($(this).hasClass("plugin_control")) {
-          $("#" + accordionNameClean + "_wrapper").addClass("plugin_control");
+          $("#" + elementName).addClass("plugin_control");
         }
-        $("#" + accordionNameClean + "_wrapper .accordion-heading span").text(accordionName);
+        $("#" + elementName + " .accordion-heading span").text(accordionName);
         var elementHorizontal = $(this).find('.custom_section_horizontal'), elementHorizontalGrid = $(this).find('.custom_section_horizontal_grid'), elementVertical = $(this).find('.custom_section_vertical');
         if (elementHorizontal.length) {
           if (elementHorizontal.hasClass('hide')) {

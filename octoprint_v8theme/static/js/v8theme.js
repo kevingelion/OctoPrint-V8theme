@@ -5,38 +5,7 @@ $(function() {
     self.terminal = parameters[1];
     self.files = parameters[2];
     self.settings = parameters[3];
-    self.control = parameters[4];
-    self.customControls = parameters[5];
-
-    /* Modified from OctoPrint
-     * Reason: Need to identify which custom controls are created by plugins
-     */
-    self.control.onAllBound = function (allViewModels) {
-      var additionalControls = [];
-      _.each(allViewModels, function (viewModel) {
-        if (viewModel.hasOwnProperty("getAdditionalControls")) {
-          additionalControls = additionalControls.concat(viewModel.getAdditionalControls());
-          _.each(additionalControls, function (control) {
-            control.plugin_control = ko.observable(true);
-          });
-        }
-      });
-      if (additionalControls.length > 0) {
-        self.control.additionalControls = additionalControls;
-        self.control.rerenderControls();
-      }
-    };
-
-    /* Modified from OctoPrint
-     * Reason: Need to give every control a plugin_control attribute to identify
-     * which custom controls are created by plugins
-     */
-    self.oldProcess = self.control._processControl;
-    self.control._processControl = function (control) {
-      self.oldProcess(control);
-      control.plugin_control = control.hasOwnProperty("plugin_control") ? ko.observable(true) : ko.observable(false);
-      return control;
-    };
+    self.customControls = parameters[4];
 
     /* Modified from OctoPrint
      * Reason: Edit how line numbers are displayed and created a buffer when
@@ -137,132 +106,19 @@ $(function() {
       if (typeof self.temperature.plot !== "undefined") self.temperature.plot.unhighlight();
     }
 
-    self.onBeforeBinding = function () {
-      $("#customControls_containerTemplate_collapsable, #customControls_containerTemplate_nameless").html(function() {
-        return $(this).html().replace(/"custom_section">/g, '"custom_section" data-bind="css: { plugin_control: (plugin_control) }">');
-      });
-    };
-
-    self.getAdditionalControls = function() {
-      return [
-        {
-          "children": [
-          {
-            "command": "M125 S%(tpressure)s",
-            "input": [{
-              "default": "40",
-              "name": "Tank Pressure",
-              "parameter": "tpressure",
-              "slider": "false"
-            }],
-            "name": "Set",
-            "offset": "0",
-            "width": "6"
-          },
-          {
-            "command": "M236 S%(epressure)s",
-            "input": [{
-              "default": "18",
-              "name": "Extrusion Pressure",
-              "parameter": "epressure",
-              "slider": "false"
-            }],
-            "name": "Set",
-            "offset": "0",
-            "width": "6"
-          },
-          {
-            "command": "M42 P2 S0",
-            "name": "Close Valve",
-            "width": "3"
-          },
-          {
-            "command": "M42 P2 S255",
-            "name": "Open Valve",
-            "width": "3"
-          }],
-          "layout": "horizontal_grid",
-          "name": "Pneumatics"
-        },
-        {
-          "children": [
-          {
-            "commands": [
-              "M851 Z-3",
-              "G28",
-              "G29",
-              "G1 Z0.5",
-              "G92 Z10.5"
-            ],
-            "name": "Start Bed Re-Zeroing"
-          },
-          {
-            "commands": [
-              "G91",
-              "G1 Z0.025",
-              "G90"
-            ],
-            "name": "▲"
-          },
-          {
-            "commands": [
-              "G91",
-              "G1 Z-0.025",
-              "G90"
-            ],
-            "name": "▼"
-          },
-          {
-            "commands": [
-              "M852 Z10",
-              "G92 Z0",
-              "G1 Z10",
-              "G28 X Y"
-            ],
-            "name": "Set Bed Zero"
-          }],
-          "collapsed": "true",
-          "layout": "horizontal",
-          "name": "Bed Calibration"
-        }
-      ];
-    }
-
     self.customControls.onEventSettingsUpdated = function (payload) {
       $(".parsed-control").each(function() {
-        if (!$(this).hasClass("plugin_control")) {
-          $(this).remove();
-        }
+        $(this).remove();
       });
       self.customControls.requestData();
-    }
-
-    self.generateWrapperName = function(name, increment) {
-      if (increment) {
-        if ($(".octoprint-container").find("#" + name + "_" + increment + "_wrapper").length > 0) {
-          return self.generateWrapperName(name, ++increment);
-        } else {
-          return name + "_" + increment + "_wrapper";
-        }
-      } else {
-        if ($(".octoprint-container").find("#" + name + "_wrapper").length > 0) {
-          return self.generateWrapperName(name, 1);
-        } else {
-          return name + "_wrapper";
-        }
-      }
     }
 
     self.parseCustomControls = function() {
       $("#control .custom_section").each(function() {
         var accordionName = $(this).find('h1 span').text();
-        var accordionNameClean = accordionName.replace(/[^a-zA-Z0-9]/g,'');
-        var elementName = self.generateWrapperName(accordionNameClean);
-        $("#terminal_wrapper").after("<div id='" + elementName + "' class='accordion-group parsed-control'><div class='accordion-heading'><a class='accordion-toggle custom-control-toggle' data-toggle='collapse' data-target='#" + accordionNameClean + "_main'><i class='icon-info-sign'></i><span></span></a></div><div id='" + accordionNameClean + "_main' class='accordion-body collapse in '><div class='accordion-inner'></div></div>");
-        if ($(this).hasClass("plugin_control")) {
-          $("#" + elementName).addClass("plugin_control");
-        }
-        $("#" + elementName + " .accordion-heading span").text(accordionName);
+        accordionNameClean = accordionName.replace(/[^a-zA-Z0-9]/g,'');
+        $("#terminal_wrapper").after("<div id='" + accordionNameClean + "_wrapper' class='accordion-group parsed-control'><div class='accordion-heading'><a class='accordion-toggle custom-control-toggle' data-toggle='collapse' data-target='#" + accordionNameClean + "_main'><i class='icon-info-sign'></i><span></span></a></div><div id='" + accordionNameClean + "_main' class='accordion-body collapse in '><div class='accordion-inner'></div></div>");
+        $("#" + accordionNameClean + "_wrapper .accordion-heading span").text(accordionName);
         var elementHorizontal = $(this).find('.custom_section_horizontal'), elementHorizontalGrid = $(this).find('.custom_section_horizontal_grid'), elementVertical = $(this).find('.custom_section_vertical');
         if (elementHorizontal.length) {
           if (elementHorizontal.hasClass('hide')) {
@@ -688,7 +544,7 @@ $(function() {
   }
 
   OCTOPRINT_VIEWMODELS.push([
-    V8ThemeViewModel, ["temperatureViewModel", "terminalViewModel", "gcodeFilesViewModel", "settingsViewModel", "controlViewModel", "customControlViewModel"],
+    V8ThemeViewModel, ["temperatureViewModel", "terminalViewModel", "gcodeFilesViewModel", "settingsViewModel", "customControlViewModel"],
     []
   ]);
 });

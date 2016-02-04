@@ -359,6 +359,12 @@ a.accordion-toggle {
   top: 2px;
   right: 0;
 }
+.tab-content.main-content-wrapper {
+  padding: 0;
+}
+.main-content-wrapper>.tab-pane {
+  display: block;
+}
 /*===================================================
    D. Buttons
 =================================================== */

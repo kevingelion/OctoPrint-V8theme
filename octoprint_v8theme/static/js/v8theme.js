@@ -341,6 +341,11 @@ $(function() {
     };
 
     self.onAllBound = function() {
+      // Add ToS link
+      $(".footer .pull-right").append(
+        "<li><a href='http://www.voxel8.co/terms-and-conditions' target='_blank'>Terms and Conditions</a></li>"
+      );
+      
       // Merge Temperature and Control tabs
       $("#temp_link").remove();
       $("#control_link").addClass("active");

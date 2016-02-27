@@ -814,8 +814,9 @@ input[type="text"].search-query {
 =================================================== */
 .control-panel-left .jog-panel {
   display: inline-block;
-  margin-right: 19px;
+  margin-right: 22px;
   text-align: center;
+  vertical-align: middle;
 }
 .control-panel-right .jog-panel {
   float: left;
@@ -930,6 +931,12 @@ input[type="text"].search-query {
 }
 .control-panel-left .box, .control-panel-right .box {
   padding-top: 4px;
+}
+#control-zhome {
+  display: none!important;
+}
+#control-zinc, #control-zdec {
+  height: 50px!important;
 }
 /* ================================================
     V. COLOR SYSTEM

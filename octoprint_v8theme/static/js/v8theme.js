@@ -141,6 +141,9 @@ $(function() {
       $("#customControls_containerTemplate_collapsable, #customControls_containerTemplate_nameless").html(function() {
         return $(this).html().replace(/"custom_section">/g, '"custom_section" data-bind="css: { plugin_control: (plugin_control) }">');
       });
+      $("#control-xyhome").attr("data-bind", function() {
+        return $(this).attr("data-bind").replace(/sendHomeCommand\(\[\'x\', \'y\'\]\)/g, "sendCustomCommand({type:'commands',commands:['G28', 'G29']})");
+      });
     };
 
     self.getAdditionalControls = function() {

@@ -39,8 +39,8 @@ $(function() {
     };
 
     /* Modified from OctoPrint
-     * Reason: Edit how line numbers are displayed and created a buffer when
-     * autoscroll is disabled.
+     * Reason: Edit how line numbers are displayed and make terminal think
+     * its tab is active
      */
     self.terminal.lineCount = ko.computed(function() {
       var total = self.terminal.log().length;
@@ -60,14 +60,7 @@ $(function() {
         });
       }
     });
-    self.terminal._processCurrentLogData = function(data) {
-      self.terminal.log(self.terminal.log().concat(_.map(data, function(line) { return self.terminal._toInternalFormat(line) })));
-      if (self.terminal.autoscrollEnabled()) {
-        self.terminal.log(self.terminal.log.slice(-self.terminal.buffer()));
-      } else {
-        self.terminal.log(self.terminal.log.slice(-1000));
-      }
-    };
+    self.terminal.tabActive = true;
 
     /* Modified from OctoPrint
      * Reason: Edit color options, as well as number of ticks, and min/max values
@@ -391,7 +384,7 @@ $(function() {
       });
       $(".line-container").after($(".terminal button[data-bind*='toggleAutoscroll']").addClass("btn-default btn-sm text-light7 mr5"));
       $(".terminal-options").append("<li class='divider'></li>");
-      $("#termin-filterpanel label.checkbox").each(function() {
+      $("#terminal-filterpanel label.checkbox").each(function() {
         var commandName = $(this).find("input").attr("value").match("Send: (.*)Recv")[1];
         commandName = commandName.replace(/\(|\)|\|/g, "");
         $(this).find("span").replaceWith("<span>Supress " + commandName + "</span>");
@@ -404,7 +397,7 @@ $(function() {
       });
       $("#terminal-sendpanel .input-append input").addClass("form-control").attr("placeholder", "Enter a command...").appendTo(".terminal-textbox");
       $("#terminal-sendpanel .input-append button").addClass("btn-default btn-gradient btn-block").appendTo(".terminal-submit");
-      $("#termin-filterpanel").parent().remove();
+      $("#terminal-filterpanel").parent().remove();
       $(".terminal .pull-left, .terminal .pull-right").remove();
 
       $(".temperature-height").click(function() {
